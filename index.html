@@ -75,7 +75,7 @@
             color: var(--branco-fosco);
         }
 
-        /* Novo Player de Música */
+        /* Novo Player de Música Nativo */
         .player-container {
             margin-top: 20px; 
             background: rgba(255, 255, 255, 0.03); 
@@ -97,7 +97,7 @@
         audio {
             width: 100%;
             height: 40px;
-            /* Deixa o player branquinho/ciano para combinar */
+            /* Inverte as cores para o player ficar claro no fundo escuro */
             filter: invert(100%) hue-rotate(150deg) brightness(1.2);
         }
 
@@ -119,7 +119,6 @@
 <body>
 
     <div class="main-wrapper">
-        <!-- Foto 1 (Esquerda) -->
         <div class="foto-lateral">
             <img src="foto1.jpg" alt="Foto 1">
         </div>
@@ -127,7 +126,6 @@
         <div class="centro">
             <h1>Nossa História</h1>
 
-            <!-- Contador -->
             <div class="contador-grid">
                 <div class="tempo"><span class="numero" id="dias">00</span><span class="label">Dias</span></div>
                 <div class="tempo"><span class="numero" id="horas">00</span><span class="label">Horas</span></div>
@@ -135,7 +133,6 @@
                 <div class="tempo"><span class="numero" id="segundos">00</span><span class="label">Seg</span></div>
             </div>
 
-            <!-- Carta -->
             <div class="texto-carta">
                 <p>Meu amor,</p>
                 <p>Escrevi este espaço para dizer o quanto você é especial na minha vida. Cada segundo ao seu lado conta, e este site é apenas uma pequena forma de mostrar o quanto eu valorizo a nossa história.</p>
@@ -143,7 +140,6 @@
                 <p style="text-align: right; font-style: italic; opacity: 0.7;">— Com amor, fff800</p>
             </div>
 
-            <!-- Novo Player de Áudio Nativo (Arquivo musica.mp3) -->
             <div class="player-container">
                 <p class="player-label">Nossa Música 🎵</p>
                 <audio controls loop>
@@ -153,15 +149,13 @@
             </div>
         </div>
 
-        <!-- Foto 2 (Direita) -->
         <div class="foto-lateral">
             <img src="foto2.jpg" alt="Foto 2">
         </div>
     </div>
 
     <script>
-        // Data ajustada conforme pedido: 20/12/2025 às 21:34
-        // Nota: O contador mostrará o tempo passado desde 20/12/2025
+        // Data corrigida para 20/12/2025 às 21:34
         const dataInicio = new Date("2025-12-20T21:34:00").getTime(); 
 
         function atualizarContador() {
@@ -173,16 +167,16 @@
             const m = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diferenca % (1000 * 60)) / 1000);
 
-            // Evita números negativos caso a data seja no futuro
-            const diasFinais = d < 0 ? 0 : d;
-            const horasFinais = h < 0 ? 0 : h;
-            const minFinais = m < 0 ? 0 : m;
-            const segFinais = s < 0 ? 0 : s;
+            // Garante que não mostre números negativos
+            const dF = d < 0 ? 0 : d;
+            const hF = h < 0 ? 0 : h;
+            const mF = m < 0 ? 0 : m;
+            const sF = s < 0 ? 0 : s;
 
-            document.getElementById("dias").innerText = String(diasFinais).padStart(2, '0');
-            document.getElementById("horas").innerText = String(horasFinais).padStart(2, '0');
-            document.getElementById("minutos").innerText = String(minFinais).padStart(2, '0');
-            document.getElementById("segundos").innerText = String(segFinais).padStart(2, '0');
+            document.getElementById("dias").innerText = String(dF).padStart(2, '0');
+            document.getElementById("horas").innerText = String(hF).padStart(2, '0');
+            document.getElementById("minutos").innerText = String(mF).padStart(2, '0');
+            document.getElementById("segundos").innerText = String(sF).padStart(2, '0');
         }
 
         setInterval(atualizarContador, 1000);
