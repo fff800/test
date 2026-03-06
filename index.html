@@ -75,11 +75,30 @@
             color: var(--branco-fosco);
         }
 
-        .spotify-container { 
-            border-radius: 15px; overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            background: #282828;
-            height: 152px;
+        /* Novo Player de Música */
+        .player-container {
+            margin-top: 20px; 
+            background: rgba(255, 255, 255, 0.03); 
+            padding: 20px; 
+            border-radius: 15px; 
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .player-label {
+            font-size: 0.75rem; 
+            opacity: 0.7; 
+            margin-bottom: 12px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            color: var(--detalhe-ciano);
+        }
+
+        audio {
+            width: 100%;
+            height: 40px;
+            /* Deixa o player branquinho/ciano para combinar */
+            filter: invert(100%) hue-rotate(150deg) brightness(1.2);
         }
 
         @keyframes fadeInUp {
@@ -100,6 +119,7 @@
 <body>
 
     <div class="main-wrapper">
+        <!-- Foto 1 (Esquerda) -->
         <div class="foto-lateral">
             <img src="foto1.jpg" alt="Foto 1">
         </div>
@@ -107,6 +127,7 @@
         <div class="centro">
             <h1>Nossa História</h1>
 
+            <!-- Contador -->
             <div class="contador-grid">
                 <div class="tempo"><span class="numero" id="dias">00</span><span class="label">Dias</span></div>
                 <div class="tempo"><span class="numero" id="horas">00</span><span class="label">Horas</span></div>
@@ -114,6 +135,7 @@
                 <div class="tempo"><span class="numero" id="segundos">00</span><span class="label">Seg</span></div>
             </div>
 
+            <!-- Carta -->
             <div class="texto-carta">
                 <p>Meu amor,</p>
                 <p>Escrevi este espaço para dizer o quanto você é especial na minha vida. Cada segundo ao seu lado conta, e este site é apenas uma pequena forma de mostrar o quanto eu valorizo a nossa história.</p>
@@ -121,35 +143,46 @@
                 <p style="text-align: right; font-style: italic; opacity: 0.7;">— Com amor, fff800</p>
             </div>
 
-            <!-- Player Spotify Corrigido -->
-            <div class="spotify-container">
-               <iframe style="border-radius:12px" src="https://open.spotify.com" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <!-- Novo Player de Áudio Nativo (Arquivo musica.mp3) -->
+            <div class="player-container">
+                <p class="player-label">Nossa Música 🎵</p>
+                <audio controls loop>
+                    <source src="musica.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                </audio>
             </div>
         </div>
 
+        <!-- Foto 2 (Direita) -->
         <div class="foto-lateral">
             <img src="foto2.jpg" alt="Foto 2">
         </div>
     </div>
 
     <script>
-        // Data ajustada: 20 de Dezembro de 2025 às 21:34
+        // Data ajustada conforme pedido: 20/12/2025 às 21:34
+        // Nota: O contador mostrará o tempo passado desde 20/12/2025
         const dataInicio = new Date("2025-12-20T21:34:00").getTime(); 
 
         function atualizarContador() {
             const agora = new Date().getTime();
             const diferenca = agora - dataInicio;
 
-            // d, h, m, s
             const d = Math.floor(diferenca / (1000 * 60 * 60 * 24));
             const h = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diferenca % (1000 * 60)) / 1000);
 
-            document.getElementById("dias").innerText = String(d).padStart(2, '0');
-            document.getElementById("horas").innerText = String(h).padStart(2, '0');
-            document.getElementById("minutos").innerText = String(m).padStart(2, '0');
-            document.getElementById("segundos").innerText = String(s).padStart(2, '0');
+            // Evita números negativos caso a data seja no futuro
+            const diasFinais = d < 0 ? 0 : d;
+            const horasFinais = h < 0 ? 0 : h;
+            const minFinais = m < 0 ? 0 : m;
+            const segFinais = s < 0 ? 0 : s;
+
+            document.getElementById("dias").innerText = String(diasFinais).padStart(2, '0');
+            document.getElementById("horas").innerText = String(horasFinais).padStart(2, '0');
+            document.getElementById("minutos").innerText = String(minFinais).padStart(2, '0');
+            document.getElementById("segundos").innerText = String(segFinais).padStart(2, '0');
         }
 
         setInterval(atualizarContador, 1000);
