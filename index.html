@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Para Meu Amor - 08/03</title>
+<title>Nossa História ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
@@ -16,192 +18,156 @@ padding:0;
 box-sizing:border-box;
 }
 
-:root{
---azul-fundo:#050a12;
---detalhe-ciano:#64ffda;
---branco-fosco:rgba(255,255,255,0.9);
-}
-
 body{
-font-family:'Montserrat',sans-serif;
-background:var(--azul-fundo);
+font-family:Montserrat;
+background:#050a12;
 color:white;
+overflow-x:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
-overflow-x:hidden;
 }
 
 /* estrelas */
 
-.stars{
+canvas{
 position:fixed;
-width:100%;
-height:200%;
-background:url("https://www.transparenttextures.com/patterns/stardust.png");
-opacity:0.25;
+top:0;
+left:0;
 z-index:-1;
-animation:starsMove 60s linear infinite;
-}
-
-@keyframes starsMove{
-from{transform:translateY(0)}
-to{transform:translateY(-2000px)}
 }
 
 /* layout */
 
-.main-wrapper{
-display:flex;
-align-items:flex-start;
-justify-content:center;
-gap:40px;
+.main{
+max-width:700px;
 width:92%;
-max-width:1400px;
-padding:50px 0;
-}
-
-/* fotos */
-
-.foto-lateral{
-flex:1;
-max-width:320px;
-animation:fadeIn 2s ease;
-}
-
-.foto-lateral img{
-width:100%;
-border-radius:18px;
-box-shadow:0 15px 45px rgba(0,0,0,0.7);
-border:3px solid rgba(255,255,255,0.1);
-transition:all .4s ease;
-}
-
-.foto-lateral img:hover{
-transform:scale(1.05) rotate(-1deg);
-}
-
-/* centro */
-
-.centro{
-flex:2;
 text-align:center;
-max-width:550px;
-animation:fadeInUp 1.5s ease;
+padding:40px 0;
 }
+
+/* título */
 
 h1{
-font-family:'Playfair Display',serif;
-font-size:2.8rem;
-margin-bottom:30px;
+font-family:"Playfair Display";
+font-size:2.6rem;
+margin-bottom:25px;
 }
 
 /* contador */
 
-.contador-grid{
+.contador{
 display:flex;
 justify-content:center;
 gap:12px;
-margin-bottom:35px;
 flex-wrap:wrap;
+margin-bottom:30px;
 }
 
-.tempo{
-background:rgba(255,255,255,0.05);
-padding:16px;
-border-radius:15px;
-min-width:70px;
-border:1px solid rgba(100,255,218,0.25);
+.bloco{
+background:rgba(255,255,255,.05);
+padding:18px;
+border-radius:14px;
+min-width:75px;
+border:1px solid rgba(100,255,218,.25);
 }
 
 .numero{
 font-size:2rem;
 font-weight:600;
-color:var(--detalhe-ciano);
-display:block;
+color:#64ffda;
+transition:.3s;
 }
 
 .label{
-font-size:0.65rem;
+font-size:.65rem;
 letter-spacing:2px;
 opacity:.6;
 }
 
 /* carta */
 
-.texto-carta{
-background:rgba(255,255,255,0.03);
-padding:35px;
-border-radius:22px;
+.carta{
+background:rgba(255,255,255,.03);
+padding:30px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,.08);
 line-height:1.8;
-font-size:1.05rem;
 text-align:left;
-border:1px solid rgba(255,255,255,0.08);
-box-shadow:
-0 10px 30px rgba(0,0,0,.5),
-inset 0 0 30px rgba(0,0,0,.4);
-margin-bottom:30px;
+margin-bottom:35px;
+min-height:140px;
 }
+
+/* galeria */
+
+.galeria{
+position:relative;
+overflow:hidden;
+border-radius:20px;
+margin-bottom:35px;
+}
+
+.slides{
+display:flex;
+transition:transform .5s ease;
+}
+
+.slides img{
+width:100%;
+flex-shrink:0;
+border-radius:20px;
+}
+
+/* botões */
+
+.btn{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,.5);
+border:none;
+color:white;
+font-size:22px;
+padding:8px 14px;
+cursor:pointer;
+border-radius:8px;
+}
+
+.prev{ left:10px }
+.next{ right:10px }
 
 /* player */
 
-.player-container{
-background:rgba(255,255,255,0.04);
+.player{
+background:rgba(255,255,255,.04);
 padding:20px;
 border-radius:20px;
-border:1px solid rgba(100,255,218,0.2);
+border:1px solid rgba(100,255,218,.2);
 }
 
-.player-label{
-font-size:.75rem;
-opacity:.7;
-margin-bottom:12px;
+.player p{
+margin-bottom:10px;
+font-size:.8rem;
 letter-spacing:2px;
-color:var(--detalhe-ciano);
+color:#64ffda;
 }
 
 audio{
 width:100%;
-height:45px;
 filter:invert(100%) hue-rotate(150deg);
-}
-
-/* animações */
-
-@keyframes fadeInUp{
-from{
-opacity:0;
-transform:translateY(30px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-@keyframes fadeIn{
-from{opacity:0}
-to{opacity:1}
 }
 
 /* celular */
 
-@media(max-width:900px){
-
-.main-wrapper{
-flex-direction:column;
-align-items:center;
-gap:20px;
-padding:25px 15px;
-}
-
-.foto-lateral{
-max-width:85%;
-}
+@media(max-width:600px){
 
 h1{
 font-size:2rem;
+}
+
+.carta{
+font-size:.95rem;
 }
 
 }
@@ -209,6 +175,7 @@ font-size:2rem;
 /* corações */
 
 @keyframes subir{
+
 0%{
 transform:translateY(0);
 opacity:0;
@@ -222,87 +189,70 @@ opacity:1;
 transform:translateY(-110vh);
 opacity:0;
 }
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="stars"></div>
+<canvas id="stars"></canvas>
 
-<div class="main-wrapper">
+<div class="main">
 
-<div class="foto-lateral">
+<h1>Nossa História ❤️</h1>
+
+<div class="contador">
+
+<div class="bloco">
+<div class="numero" id="dias">00</div>
+<div class="label">Dias</div>
+</div>
+
+<div class="bloco">
+<div class="numero" id="horas">00</div>
+<div class="label">Horas</div>
+</div>
+
+<div class="bloco">
+<div class="numero" id="minutos">00</div>
+<div class="label">Min</div>
+</div>
+
+<div class="bloco">
+<div class="numero" id="segundos">00</div>
+<div class="label">Seg</div>
+</div>
+
+</div>
+
+<div class="carta" id="carta"></div>
+
+<div class="galeria">
+
+<div class="slides" id="slides">
+
 <img src="foto1.jpg">
-</div>
-
-<div class="centro">
-
-<h1>Nossa História</h1>
-
-<div class="contador-grid">
-
-<div class="tempo">
-<span class="numero" id="dias">00</span>
-<span class="label">Dias</span>
-</div>
-
-<div class="tempo">
-<span class="numero" id="horas">00</span>
-<span class="label">Horas</span>
-</div>
-
-<div class="tempo">
-<span class="numero" id="minutos">00</span>
-<span class="label">Min</span>
-</div>
-
-<div class="tempo">
-<span class="numero" id="segundos">00</span>
-<span class="label">Seg</span>
-</div>
+<img src="foto2.jpg">
+<img src="foto3.jpg">
 
 </div>
 
-<div class="texto-carta">
-
-<p>Meu amor,</p>
-
-<p>
-Oi meu amor, eu sei que é uma coisinha simples, mas eu só não queria deixar esse dia passar em branco, porque é muito especial para você.  
-Eu queria dizer que amo cada detalhe seu minha princesa.
-</p>
-
-<p>
-Muito obrigado por ser essa pessoa incrível que você é.  
-Eu te amo muito ❤️
-</p>
-
-<p>
-Feliz Dia da Mulher, você é a mulher mais incrível que eu conheço.
-</p>
-
-<p style="text-align:right;opacity:.7;">
-— 20/12/2025
-</p>
+<button class="btn prev" onclick="voltar()">‹</button>
+<button class="btn next" onclick="avancar()">›</button>
 
 </div>
 
-<div class="player-container">
+<div class="player">
 
-<p class="player-label">Nossa Música 🎵</p>
+<p>Nossa Música 🎵</p>
 
-<audio controls loop>
+<audio controls>
 <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
-</div>
-
-</div>
-
-<div class="foto-lateral">
-<img src="foto2.jpg">
 </div>
 
 </div>
@@ -311,51 +261,188 @@ Feliz Dia da Mulher, você é a mulher mais incrível que eu conheço.
 
 /* contador */
 
-const dataInicio = new Date("2025-12-20T21:34:00").getTime();
+const inicio = new Date("2025-12-20T21:34:00").getTime()
 
-function atualizarContador(){
+function atualizar(){
 
-const agora = new Date().getTime();
-const diferenca = agora - dataInicio;
+const agora = new Date().getTime()
+const diff = agora - inicio
 
-const d = Math.floor(diferenca/(1000*60*60*24));
-const h = Math.floor((diferenca%(1000*60*60*24))/(1000*60*60));
-const m = Math.floor((diferenca%(1000*60*60))/(1000*60));
-const s = Math.floor((diferenca%(1000*60))/1000);
+const d = Math.floor(diff/(1000*60*60*24))
+const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60))
+const m = Math.floor((diff%(1000*60*60))/(1000*60))
+const s = Math.floor((diff%(1000*60))/1000)
 
-document.getElementById("dias").innerText = String(Math.max(d,0)).padStart(2,'0');
-document.getElementById("horas").innerText = String(Math.max(h,0)).padStart(2,'0');
-document.getElementById("minutos").innerText = String(Math.max(m,0)).padStart(2,'0');
-document.getElementById("segundos").innerText = String(Math.max(s,0)).padStart(2,'0');
+update("dias",d)
+update("horas",h)
+update("minutos",m)
+update("segundos",s)
 
 }
 
-setInterval(atualizarContador,1000);
-atualizarContador();
+function update(id,val){
+
+const el=document.getElementById(id)
+
+if(el.innerText!=val){
+
+el.style.transform="scale(1.2)"
+
+setTimeout(()=>{
+el.innerText=String(Math.max(val,0)).padStart(2,'0')
+el.style.transform="scale(1)"
+},150)
+
+}
+
+}
+
+setInterval(atualizar,1000)
+
+/* texto digitando */
+
+const texto = `Meu amor,
+
+Eu sei que isso é algo simples,
+mas eu não queria deixar esse dia passar em branco.
+
+Você é uma pessoa incrível
+e eu amo cada detalhe seu.
+
+Obrigado por estar na minha vida ❤️
+
+— 20/12/2025`
+
+let i=0
+
+function digitar(){
+
+if(i<texto.length){
+
+document.getElementById("carta").innerHTML+=texto.charAt(i)
+
+i++
+
+setTimeout(digitar,35)
+
+}
+
+}
+
+digitar()
+
+/* galeria */
+
+let index=0
+const slides=document.getElementById("slides")
+const total=slides.children.length
+
+function avancar(){
+
+index++
+
+if(index>=total) index=0
+
+slides.style.transform=`translateX(-${index*100}%)`
+
+}
+
+function voltar(){
+
+index--
+
+if(index<0) index=total-1
+
+slides.style.transform=`translateX(-${index*100}%)`
+
+}
+
+/* swipe */
+
+let startX=0
+
+slides.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX
+})
+
+slides.addEventListener("touchend",e=>{
+
+let endX=e.changedTouches[0].clientX
+
+if(startX-endX>50) avancar()
+if(endX-startX>50) voltar()
+
+})
+
+/* estrelas */
+
+const canvas=document.getElementById("stars")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let stars=[]
+
+for(let i=0;i<120;i++){
+
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1.5
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+stars.forEach(s=>{
+
+ctx.beginPath()
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2)
+ctx.fill()
+
+s.y+=0.2
+
+if(s.y>canvas.height){
+s.y=0
+}
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
 
 /* corações */
 
-function criarCoracao(){
+function coracao(){
 
-const coracao=document.createElement("div")
+const c=document.createElement("div")
 
-coracao.innerHTML="❤️"
+c.innerHTML="❤️"
 
-coracao.style.position="fixed"
-coracao.style.left=Math.random()*100+"vw"
-coracao.style.bottom="-20px"
-coracao.style.fontSize=Math.random()*20+10+"px"
-coracao.style.animation="subir 6s linear"
+c.style.position="fixed"
+c.style.left=Math.random()*100+"vw"
+c.style.bottom="-20px"
+c.style.fontSize=Math.random()*20+10+"px"
+c.style.animation="subir 6s linear"
 
-document.body.appendChild(coracao)
+document.body.appendChild(c)
 
 setTimeout(()=>{
-coracao.remove()
+c.remove()
 },6000)
 
 }
 
-setInterval(criarCoracao,1200)
+setInterval(coracao,1500)
 
 </script>
 
