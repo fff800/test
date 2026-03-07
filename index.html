@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 
 <meta charset="UTF-8">
@@ -21,10 +22,6 @@ body{
 font-family:Montserrat;
 background:#050a12;
 color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
 overflow-x:hidden;
 }
 
@@ -34,21 +31,69 @@ canvas{
 position:fixed;
 top:0;
 left:0;
-z-index:-1;
+z-index:-2;
+}
+
+/* tela inicial */
+
+.intro{
+position:fixed;
+width:100%;
+height:100%;
+background:#050a12;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:10;
+}
+
+.envelope{
+width:180px;
+height:120px;
+background:#ff4d6d;
+position:relative;
+border-radius:8px;
+cursor:pointer;
+transition:.6s;
+}
+
+.envelope:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:90px solid transparent;
+border-right:90px solid transparent;
+border-bottom:60px solid #ff758f;
+}
+
+.intro p{
+margin-top:20px;
+opacity:.8;
+}
+
+.hidden{
+display:none;
 }
 
 /* layout */
 
 .main{
-max-width:700px;
+max-width:750px;
 width:92%;
+margin:auto;
 text-align:center;
 padding:40px 0;
 }
 
+/* título */
+
 h1{
 font-family:"Playfair Display";
-font-size:2.5rem;
+font-size:2.6rem;
 margin-bottom:25px;
 }
 
@@ -74,7 +119,6 @@ border:1px solid rgba(100,255,218,.25);
 font-size:2rem;
 font-weight:600;
 color:#64ffda;
-transition:.3s;
 }
 
 .label{
@@ -115,14 +159,7 @@ width:100%;
 flex-shrink:0;
 border-radius:20px;
 cursor:pointer;
-transition:transform .3s;
 }
-
-.slides img:hover{
-transform:scale(1.02);
-}
-
-/* botões */
 
 .btn{
 position:absolute;
@@ -137,22 +174,20 @@ cursor:pointer;
 border-radius:8px;
 }
 
-.prev{ left:10px }
-.next{ right:10px }
+.prev{left:10px}
+.next{right:10px}
 
 /* zoom */
 
 .zoom{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,.9);
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:999;
+z-index:99;
 }
 
 .zoom img{
@@ -182,7 +217,7 @@ width:100%;
 filter:invert(100%) hue-rotate(150deg);
 }
 
-/* coração */
+/* corações */
 
 @keyframes subir{
 0%{transform:translateY(0);opacity:0;}
@@ -191,10 +226,17 @@ filter:invert(100%) hue-rotate(150deg);
 }
 
 </style>
-
 </head>
 
 <body>
+
+<div class="intro" id="intro">
+
+<div class="envelope" onclick="abrir()"></div>
+
+<p>Toque para abrir 💌</p>
+
+</div>
 
 <canvas id="stars"></canvas>
 
@@ -248,7 +290,7 @@ filter:invert(100%) hue-rotate(150deg);
 <p>Nossa Música 🎵</p>
 
 <audio controls>
-<source src="musica.mp3" type="audio/mpeg">
+<source src="musica.mp3">
 </audio>
 
 </div>
@@ -257,24 +299,32 @@ filter:invert(100%) hue-rotate(150deg);
 
 <script>
 
+/* abrir envelope */
+
+function abrir(){
+
+document.getElementById("intro").classList.add("hidden")
+
+}
+
 /* contador */
 
 const inicio = new Date("2025-12-20T21:34:00").getTime()
 
 function atualizar(){
 
-const agora = new Date().getTime()
-const diff = agora - inicio
+const agora=new Date().getTime()
+const diff=agora-inicio
 
-const d = Math.floor(diff/(1000*60*60*24))
-const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60))
-const m = Math.floor((diff%(1000*60*60))/(1000*60))
-const s = Math.floor((diff%(1000*60))/1000)
+const d=Math.floor(diff/(1000*60*60*24))
+const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60))
+const m=Math.floor((diff%(1000*60*60))/(1000*60))
+const s=Math.floor((diff%(1000*60))/1000)
 
-document.getElementById("dias").innerText = String(d).padStart(2,'0')
-document.getElementById("horas").innerText = String(h).padStart(2,'0')
-document.getElementById("minutos").innerText = String(m).padStart(2,'0')
-document.getElementById("segundos").innerText = String(s).padStart(2,'0')
+document.getElementById("dias").innerText=d
+document.getElementById("horas").innerText=h
+document.getElementById("minutos").innerText=m
+document.getElementById("segundos").innerText=s
 
 }
 
@@ -284,13 +334,13 @@ setInterval(atualizar,1000)
 
 const texto=`Meu amor,
 
-Eu sei que isso é simples,
+Eu sei que isso é algo simples,
 mas não queria deixar esse dia passar em branco.
 
-Você é uma pessoa incrível
+Você é a pessoa mais incrível que eu conheço
 e eu amo cada detalhe seu.
 
-Obrigado por estar comigo ❤️`
+Obrigado por existir na minha vida ❤️`
 
 let i=0
 
