@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 
 <meta charset="UTF-8">
@@ -8,7 +7,7 @@
 
 <title>Nossa História ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -25,37 +24,39 @@ color:white;
 overflow-x:hidden;
 }
 
-/* estrelas */
+/* fundo estrelas */
 
 canvas{
 position:fixed;
 top:0;
 left:0;
-z-index:-2;
+z-index:-1;
 }
 
-/* tela inicial */
+/* tela envelope */
 
-.intro{
+#intro{
 position:fixed;
 width:100%;
-height:100%;
-background:#050a12;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-flex-direction:column;
+background:#050a12;
 z-index:10;
 }
 
 .envelope{
-width:180px;
-height:120px;
+width:200px;
+height:130px;
 background:#ff4d6d;
 position:relative;
-border-radius:8px;
 cursor:pointer;
-transition:.6s;
+border-radius:6px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
 }
 
 .envelope:before{
@@ -63,38 +64,31 @@ content:"";
 position:absolute;
 top:0;
 left:0;
-width:0;
-height:0;
-border-left:90px solid transparent;
-border-right:90px solid transparent;
-border-bottom:60px solid #ff758f;
+width:100%;
+height:100%;
+background:#ff758f;
+clip-path:polygon(0 0,100% 0,50% 60%);
+transition:.6s;
 }
 
-.intro p{
-margin-top:20px;
-opacity:.8;
+.envelope.open:before{
+transform:rotateX(180deg);
 }
 
-.hidden{
-display:none;
-}
-
-/* layout */
+/* site principal */
 
 .main{
 max-width:750px;
-width:92%;
 margin:auto;
+padding:40px 20px;
+display:none;
 text-align:center;
-padding:40px 0;
 }
-
-/* título */
 
 h1{
 font-family:"Playfair Display";
 font-size:2.6rem;
-margin-bottom:25px;
+margin-bottom:30px;
 }
 
 /* contador */
@@ -102,29 +96,29 @@ margin-bottom:25px;
 .contador{
 display:flex;
 justify-content:center;
-gap:12px;
+gap:15px;
 flex-wrap:wrap;
-margin-bottom:30px;
+margin-bottom:35px;
 }
 
-.bloco{
+.box{
 background:rgba(255,255,255,.05);
 padding:18px;
 border-radius:14px;
-min-width:75px;
-border:1px solid rgba(100,255,218,.25);
+min-width:80px;
+border:1px solid rgba(255,255,255,.1);
 }
 
 .numero{
 font-size:2rem;
-font-weight:600;
 color:#64ffda;
+font-weight:600;
 }
 
 .label{
 font-size:.65rem;
 letter-spacing:2px;
-opacity:.6;
+opacity:.7;
 }
 
 /* carta */
@@ -132,12 +126,11 @@ opacity:.6;
 .carta{
 background:rgba(255,255,255,.03);
 padding:30px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,.08);
+border-radius:18px;
 line-height:1.8;
 text-align:left;
-margin-bottom:35px;
-min-height:140px;
+margin-bottom:40px;
+min-height:150px;
 }
 
 /* galeria */
@@ -146,12 +139,12 @@ min-height:140px;
 position:relative;
 overflow:hidden;
 border-radius:20px;
-margin-bottom:35px;
+margin-bottom:40px;
 }
 
 .slides{
 display:flex;
-transition:transform .5s ease;
+transition:transform .5s;
 }
 
 .slides img{
@@ -181,13 +174,15 @@ border-radius:8px;
 
 .zoom{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,.9);
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:99;
+z-index:20;
 }
 
 .zoom img{
@@ -201,28 +196,32 @@ border-radius:10px;
 .player{
 background:rgba(255,255,255,.04);
 padding:20px;
-border-radius:20px;
-border:1px solid rgba(100,255,218,.2);
-}
-
-.player p{
-margin-bottom:10px;
-font-size:.8rem;
-letter-spacing:2px;
-color:#64ffda;
+border-radius:18px;
 }
 
 audio{
 width:100%;
-filter:invert(100%) hue-rotate(150deg);
+filter:invert(100%);
 }
 
 /* corações */
 
 @keyframes subir{
-0%{transform:translateY(0);opacity:0;}
-50%{opacity:1;}
-100%{transform:translateY(-110vh);opacity:0;}
+
+0%{
+transform:translateY(0);
+opacity:0;
+}
+
+50%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-110vh);
+opacity:0;
+}
+
 }
 
 </style>
@@ -230,38 +229,42 @@ filter:invert(100%) hue-rotate(150deg);
 
 <body>
 
-<div class="intro" id="intro">
+<canvas id="stars"></canvas>
 
-<div class="envelope" onclick="abrir()"></div>
+<!-- intro -->
 
-<p>Toque para abrir 💌</p>
+<div id="intro">
+
+<div class="envelope" onclick="abrir()">
+Abrir ❤️
+</div>
 
 </div>
 
-<canvas id="stars"></canvas>
+<!-- site -->
 
-<div class="main">
+<div class="main" id="site">
 
 <h1>Nossa História ❤️</h1>
 
 <div class="contador">
 
-<div class="bloco">
+<div class="box">
 <div class="numero" id="dias">00</div>
 <div class="label">Dias</div>
 </div>
 
-<div class="bloco">
+<div class="box">
 <div class="numero" id="horas">00</div>
 <div class="label">Horas</div>
 </div>
 
-<div class="bloco">
+<div class="box">
 <div class="numero" id="minutos">00</div>
 <div class="label">Min</div>
 </div>
 
-<div class="bloco">
+<div class="box">
 <div class="numero" id="segundos">00</div>
 <div class="label">Seg</div>
 </div>
@@ -287,7 +290,7 @@ filter:invert(100%) hue-rotate(150deg);
 
 <div class="player">
 
-<p>Nossa Música 🎵</p>
+<p>Nossa música 🎵</p>
 
 <audio controls>
 <source src="musica.mp3">
@@ -303,17 +306,25 @@ filter:invert(100%) hue-rotate(150deg);
 
 function abrir(){
 
-document.getElementById("intro").classList.add("hidden")
+document.querySelector(".envelope").classList.add("open")
+
+setTimeout(()=>{
+
+document.getElementById("intro").style.display="none"
+document.getElementById("site").style.display="block"
+
+},600)
 
 }
 
 /* contador */
 
-const inicio = new Date("2025-12-20T21:34:00").getTime()
+const inicio=new Date("2025-12-20T21:34:00").getTime()
 
 function atualizar(){
 
 const agora=new Date().getTime()
+
 const diff=agora-inicio
 
 const d=Math.floor(diff/(1000*60*60*24))
@@ -321,10 +332,10 @@ const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60))
 const m=Math.floor((diff%(1000*60*60))/(1000*60))
 const s=Math.floor((diff%(1000*60))/1000)
 
-document.getElementById("dias").innerText=d
-document.getElementById("horas").innerText=h
-document.getElementById("minutos").innerText=m
-document.getElementById("segundos").innerText=s
+dias.innerText=d
+horas.innerText=h
+minutos.innerText=m
+segundos.innerText=s
 
 }
 
@@ -334,13 +345,13 @@ setInterval(atualizar,1000)
 
 const texto=`Meu amor,
 
-Eu sei que isso é algo simples,
-mas não queria deixar esse dia passar em branco.
+Eu fiz esse pequeno site para lembrar
+de cada momento que vivemos juntos.
 
-Você é a pessoa mais incrível que eu conheço
-e eu amo cada detalhe seu.
+Cada dia ao seu lado
+é um dos melhores capítulos da minha vida.
 
-Obrigado por existir na minha vida ❤️`
+Obrigado por existir ❤️`
 
 let i=0
 
@@ -348,7 +359,7 @@ function digitar(){
 
 if(i<texto.length){
 
-document.getElementById("carta").innerHTML+=texto.charAt(i)
+carta.innerHTML+=texto.charAt(i)
 
 i++
 
@@ -364,17 +375,14 @@ digitar()
 
 let index=0
 const slides=document.getElementById("slides")
-const total=slides.children.length
 
 function avancar(){
 
 index++
 
-if(index>=total) index=0
+if(index>2) index=0
 
 slides.style.transform=`translateX(-${index*100}%)`
-
-coracao()
 
 }
 
@@ -382,32 +390,13 @@ function voltar(){
 
 index--
 
-if(index<0) index=total-1
+if(index<0) index=2
 
 slides.style.transform=`translateX(-${index*100}%)`
 
-coracao()
-
 }
 
-/* swipe */
-
-let startX=0
-
-slides.addEventListener("touchstart",e=>{
-startX=e.touches[0].clientX
-})
-
-slides.addEventListener("touchend",e=>{
-
-let endX=e.changedTouches[0].clientX
-
-if(startX-endX>50) avancar()
-if(endX-startX>50) voltar()
-
-})
-
-/* zoom foto */
+/* zoom */
 
 document.querySelectorAll(".slides img").forEach(img=>{
 
@@ -475,9 +464,9 @@ requestAnimationFrame(draw)
 
 draw()
 
-/* corações */
+/* corações infinitos */
 
-function coracao(){
+setInterval(()=>{
 
 const c=document.createElement("div")
 
@@ -493,7 +482,7 @@ document.body.appendChild(c)
 
 setTimeout(()=>c.remove(),6000)
 
-}
+},800)
 
 </script>
 
