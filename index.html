@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 
 <meta charset="UTF-8">
@@ -22,11 +21,11 @@ body{
 font-family:Montserrat;
 background:#050a12;
 color:white;
-overflow-x:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
+overflow-x:hidden;
 }
 
 /* estrelas */
@@ -47,11 +46,9 @@ text-align:center;
 padding:40px 0;
 }
 
-/* título */
-
 h1{
 font-family:"Playfair Display";
-font-size:2.6rem;
+font-size:2.5rem;
 margin-bottom:25px;
 }
 
@@ -117,6 +114,12 @@ transition:transform .5s ease;
 width:100%;
 flex-shrink:0;
 border-radius:20px;
+cursor:pointer;
+transition:transform .3s;
+}
+
+.slides img:hover{
+transform:scale(1.02);
 }
 
 /* botões */
@@ -136,6 +139,27 @@ border-radius:8px;
 
 .prev{ left:10px }
 .next{ right:10px }
+
+/* zoom */
+
+.zoom{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.9);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.zoom img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
 
 /* player */
 
@@ -158,38 +182,12 @@ width:100%;
 filter:invert(100%) hue-rotate(150deg);
 }
 
-/* celular */
-
-@media(max-width:600px){
-
-h1{
-font-size:2rem;
-}
-
-.carta{
-font-size:.95rem;
-}
-
-}
-
-/* corações */
+/* coração */
 
 @keyframes subir{
-
-0%{
-transform:translateY(0);
-opacity:0;
-}
-
-50%{
-opacity:1;
-}
-
-100%{
-transform:translateY(-110vh);
-opacity:0;
-}
-
+0%{transform:translateY(0);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-110vh);opacity:0;}
 }
 
 </style>
@@ -273,27 +271,10 @@ const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60))
 const m = Math.floor((diff%(1000*60*60))/(1000*60))
 const s = Math.floor((diff%(1000*60))/1000)
 
-update("dias",d)
-update("horas",h)
-update("minutos",m)
-update("segundos",s)
-
-}
-
-function update(id,val){
-
-const el=document.getElementById(id)
-
-if(el.innerText!=val){
-
-el.style.transform="scale(1.2)"
-
-setTimeout(()=>{
-el.innerText=String(Math.max(val,0)).padStart(2,'0')
-el.style.transform="scale(1)"
-},150)
-
-}
+document.getElementById("dias").innerText = String(d).padStart(2,'0')
+document.getElementById("horas").innerText = String(h).padStart(2,'0')
+document.getElementById("minutos").innerText = String(m).padStart(2,'0')
+document.getElementById("segundos").innerText = String(s).padStart(2,'0')
 
 }
 
@@ -301,17 +282,15 @@ setInterval(atualizar,1000)
 
 /* texto digitando */
 
-const texto = `Meu amor,
+const texto=`Meu amor,
 
-Eu sei que isso é algo simples,
-mas eu não queria deixar esse dia passar em branco.
+Eu sei que isso é simples,
+mas não queria deixar esse dia passar em branco.
 
 Você é uma pessoa incrível
 e eu amo cada detalhe seu.
 
-Obrigado por estar na minha vida ❤️
-
-— 20/12/2025`
+Obrigado por estar comigo ❤️`
 
 let i=0
 
@@ -345,6 +324,8 @@ if(index>=total) index=0
 
 slides.style.transform=`translateX(-${index*100}%)`
 
+coracao()
+
 }
 
 function voltar(){
@@ -354,6 +335,8 @@ index--
 if(index<0) index=total-1
 
 slides.style.transform=`translateX(-${index*100}%)`
+
+coracao()
 
 }
 
@@ -371,6 +354,28 @@ let endX=e.changedTouches[0].clientX
 
 if(startX-endX>50) avancar()
 if(endX-startX>50) voltar()
+
+})
+
+/* zoom foto */
+
+document.querySelectorAll(".slides img").forEach(img=>{
+
+img.onclick=()=>{
+
+const zoom=document.createElement("div")
+zoom.className="zoom"
+
+const imagem=document.createElement("img")
+imagem.src=img.src
+
+zoom.appendChild(imagem)
+
+zoom.onclick=()=>zoom.remove()
+
+document.body.appendChild(zoom)
+
+}
 
 })
 
@@ -436,13 +441,9 @@ c.style.animation="subir 6s linear"
 
 document.body.appendChild(c)
 
-setTimeout(()=>{
-c.remove()
-},6000)
+setTimeout(()=>c.remove(),6000)
 
 }
-
-setInterval(coracao,1500)
 
 </script>
 
