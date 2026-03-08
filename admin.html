@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Painel Admin</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0b0f1a;
+color:white;
+padding:40px;
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+}
+
+.mensagem{
+background:#141b2d;
+padding:20px;
+border-radius:10px;
+margin-bottom:15px;
+border:1px solid #2a3555;
+}
+
+.nome{
+font-weight:bold;
+color:#64ffda;
+margin-bottom:8px;
+}
+
+.data{
+font-size:12px;
+opacity:.6;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+<body>
+
+<h1>💌 Mensagens Recebidas</h1>
+
+<div class="container" id="lista"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "SUA_API_KEY",
+authDomain: "SEU_PROJETO.firebaseapp.com",
+projectId: "SEU_PROJETO",
+storageBucket: "SEU_PROJETO.appspot.com",
+messagingSenderId: "XXXX",
+appId: "XXXX"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const lista=document.getElementById("lista")
+
+const q=query(collection(db,"mensagens"),orderBy("data","desc"))
+
+onSnapshot(q,(snapshot)=>{
+
+lista.innerHTML=""
+
+snapshot.forEach(doc=>{
+
+const m=doc.data()
+
+const div=document.createElement("div")
+div.className="mensagem"
+
+div.innerHTML=`
+<div class="nome">${m.nome || "Anônimo"}</div>
+<div>${m.mensagem}</div>
+<div class="data">${new Date(m.data.seconds*1000).toLocaleString()}</div>
+`
+
+lista.appendChild(div)
+
+})
+
+})
+
+</script>
+
+</body>
+</html>
