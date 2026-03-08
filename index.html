@@ -25,12 +25,16 @@ color:white;
 overflow-x:hidden;
 }
 
+/* estrelas */
+
 canvas{
 position:fixed;
 top:0;
 left:0;
 z-index:-2;
 }
+
+/* tela inicial */
 
 .intro{
 position:fixed;
@@ -75,6 +79,8 @@ opacity:.8;
 display:none;
 }
 
+/* layout */
+
 .main{
 max-width:750px;
 width:92%;
@@ -83,11 +89,15 @@ text-align:center;
 padding:40px 0;
 }
 
+/* título */
+
 h1{
 font-family:"Playfair Display";
 font-size:2.6rem;
 margin-bottom:25px;
 }
+
+/* contador */
 
 .contador{
 display:flex;
@@ -117,6 +127,8 @@ letter-spacing:2px;
 opacity:.6;
 }
 
+/* carta */
+
 .carta{
 background:rgba(255,255,255,.03);
 padding:30px;
@@ -127,6 +139,8 @@ text-align:left;
 margin-bottom:35px;
 min-height:140px;
 }
+
+/* galeria */
 
 .galeria{
 position:relative;
@@ -163,6 +177,8 @@ border-radius:8px;
 .prev{left:10px}
 .next{right:10px}
 
+/* zoom */
+
 .zoom{
 position:fixed;
 width:100%;
@@ -180,12 +196,13 @@ max-height:90%;
 border-radius:10px;
 }
 
+/* player */
+
 .player{
 background:rgba(255,255,255,.04);
 padding:20px;
 border-radius:20px;
 border:1px solid rgba(100,255,218,.2);
-margin-bottom:30px;
 }
 
 .player p{
@@ -200,6 +217,8 @@ width:100%;
 filter:invert(100%) hue-rotate(150deg);
 }
 
+/* corações */
+
 @keyframes subir{
 0%{transform:translateY(0);opacity:0;}
 50%{opacity:1;}
@@ -212,8 +231,11 @@ filter:invert(100%) hue-rotate(150deg);
 <body>
 
 <div class="intro" id="intro">
+
 <div class="envelope" onclick="abrir()"></div>
+
 <p>Toque para abrir 💌</p>
+
 </div>
 
 <canvas id="stars"></canvas>
@@ -263,35 +285,11 @@ filter:invert(100%) hue-rotate(150deg);
 <img src="foto9.jpg">
 <img src="foto10.jpg">
 
+
 </div>
 
 <button class="btn prev" onclick="voltar()">‹</button>
 <button class="btn next" onclick="avancar()">›</button>
-
-</div>
-
-<!-- CAIXA DE MENSAGEM -->
-
-<div class="player">
-
-<p>💌 Deixe uma mensagem</p>
-
-<input id="nomeMsg" placeholder="Seu nome"
-style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:none;">
-
-<textarea id="textoMsg" placeholder="Escreva sua mensagem..."
-style="width:100%;padding:10px;height:100px;border-radius:8px;border:none;"></textarea>
-
-<button onclick="enviarMensagem()" style="
-margin-top:10px;
-padding:10px 20px;
-border:none;
-border-radius:10px;
-background:#ff4d6d;
-color:white;
-cursor:pointer;">
-Enviar ❤️
-</button>
 
 </div>
 
@@ -312,7 +310,9 @@ Enviar ❤️
 /* abrir envelope */
 
 function abrir(){
+
 document.getElementById("intro").classList.add("hidden")
+
 }
 
 /* contador */
@@ -357,6 +357,7 @@ function digitar(){
 if(i<texto.length){
 
 document.getElementById("carta").innerHTML+=texto.charAt(i)
+
 i++
 
 setTimeout(digitar,35)
@@ -374,45 +375,131 @@ const slides=document.getElementById("slides")
 const total=slides.children.length
 
 function avancar(){
+
 index++
+
 if(index>=total) index=0
+
 slides.style.transform=`translateX(-${index*100}%)`
+
 coracao()
+
 }
 
 function voltar(){
+
 index--
+
 if(index<0) index=total-1
+
 slides.style.transform=`translateX(-${index*100}%)`
+
 coracao()
+
 }
 
-/* salvar mensagens */
+/* swipe */
 
-function enviarMensagem(){
+let startX=0
 
-const nome=document.getElementById("nomeMsg").value
-const texto=document.getElementById("textoMsg").value
-
-if(!texto){
-alert("Escreva uma mensagem")
-return
-}
-
-let mensagens=JSON.parse(localStorage.getItem("mensagens") || "[]")
-
-mensagens.push({
-nome:nome || "Anônimo",
-texto:texto,
-data:new Date().toLocaleString()
+slides.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX
 })
 
-localStorage.setItem("mensagens",JSON.stringify(mensagens))
+slides.addEventListener("touchend",e=>{
 
-alert("Mensagem enviada ❤️")
+let endX=e.changedTouches[0].clientX
 
-document.getElementById("textoMsg").value=""
-document.getElementById("nomeMsg").value=""
+if(startX-endX>50) avancar()
+if(endX-startX>50) voltar()
+
+})
+
+/* zoom foto */
+
+document.querySelectorAll(".slides img").forEach(img=>{
+
+img.onclick=()=>{
+
+const zoom=document.createElement("div")
+zoom.className="zoom"
+
+const imagem=document.createElement("img")
+imagem.src=img.src
+
+zoom.appendChild(imagem)
+
+zoom.onclick=()=>zoom.remove()
+
+document.body.appendChild(zoom)
+
+}
+
+})
+
+/* estrelas */
+
+const canvas=document.getElementById("stars")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let stars=[]
+
+for(let i=0;i<120;i++){
+
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1.5
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+stars.forEach(s=>{
+
+ctx.beginPath()
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2)
+ctx.fill()
+
+s.y+=0.2
+
+if(s.y>canvas.height){
+s.y=0
+}
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+/* corações */
+
+function coracao(){
+
+const c=document.createElement("div")
+
+c.innerHTML="❤️"
+
+c.style.position="fixed"
+c.style.left=Math.random()*100+"vw"
+c.style.bottom="-20px"
+c.style.fontSize=Math.random()*20+10+"px"
+c.style.animation="subir 6s linear"
+
+document.body.appendChild(c)
+
+setTimeout(()=>c.remove(),6000)
 
 }
 
